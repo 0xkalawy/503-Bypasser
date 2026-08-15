@@ -81,29 +81,6 @@ chmod +x bypass-503.sh
 
 ---
 
-## 📋 Techniques Covered
-
-| # | Technique | Category |
-|---|-----------|----------|
-| 1 | `X-Forwarded-For: 127.0.0.1` | Header spoofing |
-| 2 | `X-Originating-IP: 127.0.0.1` | Header spoofing |
-| 3 | `X-Remote-IP: 127.0.0.1` | Header spoofing |
-| 4 | `X-Remote-Addr: 127.0.0.1` | Header spoofing |
-| 5 | `X-Client-IP: 127.0.0.1` | Header spoofing |
-| 6 | `X-Host: 127.0.0.1` | Header spoofing |
-| 7 | `X-Forwarded-Host: 127.0.0.1` | Header spoofing |
-| 8 | `X-Custom-IP-Authorization: 127.0.0.1` | Header spoofing |
-| 9 | `X-Real-IP: 127.0.0.1` | Header spoofing |
-| 10 | `CF-Connecting-IP: 127.0.0.1` | CDN bypass |
-| 11 | `True-Client-IP: 127.0.0.1` | CDN bypass |
-| 12 | `Cluster-Client-IP: 127.0.0.1` | Internal bypass |
-| 13 | `Via: 1.1 internal` | Proxy spoofing |
-| 14 | `Retry-After: 0` | Backoff reset |
-| 15 | Path URL-encoding (`%2f`, `%09`, `%20`) | Path fuzzing |
-| 16 | Double-encoding (`%252f`, `%ef%bc%8f`) | WAF bypass |
-
----
-
 ## 📸 Sample Output
 
 ```
@@ -128,27 +105,6 @@ chmod +x bypass-503.sh
 
  [+] Done. Elapsed: 2s
 ```
-
----
-
-## 💡 When does a 503 bypass actually work?
-
-| Scenario | Likely Bypassable? |
-|----------|--------------------|
-| CDN-enforced maintenance page | ✅ Often — spoof `CF-Connecting-IP` or `True-Client-IP` |
-| WAF rate-limit returning 503 | ✅ Often — path normalization or encoding tricks fool rule matching |
-| Load balancer health-check gate | ⚠️ Sometimes — `Via: 1.1 internal` tricks upstream LB |
-| Actual backend down | ❌ No — server is genuinely unavailable |
-| Kubernetes ingress overload | ⚠️ Sometimes — `X-Forwarded-For` bypass with internal CIDR |
-
----
-
-## 🔗 Related Tools
-
-- [bypass-403](https://github.com/iamj0ker/bypass-403) — the original 403 bypasser
-- [4-ZERO-3](https://github.com/Dheerajmadhukar/4-ZERO-3) — advanced 403/401 bypass
-- [403fuzzer](https://github.com/intrudir/403fuzzer) — Burp-based fuzzer
-- [nomore403](https://github.com/devploit/nomore403) — Go-based bypass tool
 
 ---
 
